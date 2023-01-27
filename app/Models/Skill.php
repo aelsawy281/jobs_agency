@@ -11,4 +11,8 @@ class Skill extends Model
     protected $fillable = [
         'name'
     ];
+    public function jobSkills()
+    {
+        return $this->hasMany(JobSkill::class,);
+    }
 }

@@ -11,8 +11,21 @@ class Skill extends Model
     protected $fillable = [
         'title',
         'desc',
-        'user_id'
+        'user_id',
+        'speciality_id'
 
         
     ];
+    public function applies()
+    {
+        return $this->hasMany(Apply::class,);
+    }
+    public function jobSkills()
+    {
+        return $this->hasMany(JobSkill::class,);
+    }
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class);
+    }
 }

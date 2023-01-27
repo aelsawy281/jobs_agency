@@ -14,4 +14,9 @@ class Package extends Model
         'number_of_ads',
         'price'
     ];
+
+    public function Subscribes()
+    {
+        return $this->hasMany(Subscribtion::class,);
+    }
 }

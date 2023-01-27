@@ -21,6 +21,10 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users') ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->unsignedBigInteger('speciality_id')->nullable();
+            $table->foreign('speciality_id')->references('id')->on('specialties') ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

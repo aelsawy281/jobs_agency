@@ -13,4 +13,12 @@ class Apply extends Model
         'user_id'
     
     ];
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
