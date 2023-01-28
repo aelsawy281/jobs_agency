@@ -59,23 +59,25 @@ a {
         </style>
     </head>
     <body>
-  
 
-
-
-<form action="{{route('login') }}" method="post" >
-@csrf
+    <span style="color:red"><?php if(isset($_SESSION['error'])){
+     echo $_SESSION['error'];   }?></span>
+<form action="{{route('register') }}" method="post">
+    @csrf
   <div class="container">
-    @if(Session::has('error'))
-    <div class="alert alert-error">
-        {{Session::get('error')}}
-    </div>
-@endif
-    <h1>Login</h1>
-    <p>Please fill in this form to enter our Page</p>
+    <h1>Register</h1>
+    <p>Please fill in this form to create an account.</p>
     <hr>
+    <label for="email"><b>Name</b></label>
+    <input type="text" name="name" placeholder="Enter Name" id="email" required class="form-control">
+    @if ($errors->has('name'))
+    <div class="error">
+        {{ $errors->first('name') }}
+    </div>
+    @endif
+   
     <label for="email"><b>Email</b></label>
-    <input type="text" name="email" placeholder="Enter Email" id="email" required class="form-control" >
+    <input type="text" name="email" placeholder="Enter Email" id="email" required class="form-control">
     @if ($errors->has('email'))
     <div class="error">
         {{ $errors->first('email') }}
@@ -84,13 +86,12 @@ a {
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" id="psw" required>
     @if ($errors->has('password'))
-        <div class="error">
-            {{ $errors->first('password') }}
-        </div>
-        @endif
+    <div class="error">
+        {{ $errors->first('password') }}
+    </div>
+    @endif
 
-
-        <label for="role"><b>Role</b></label>
+    <label for="role"><b>Role</b></label>
     <select name="role" id="role" required class="form-control">
   <option value="admin">Admin</option>
   <option value="employee">Employee</option>
@@ -102,9 +103,15 @@ a {
         {{ $errors->first('role') }}
     </div>
     @endif
-    <button type="submit" name="login" class="registerbtn">login</button>
+    <hr>
+
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+    <button type="submit" class="registerbtn" name="save_user">Register</button>
+  </div>
+
+  <div class="container signin">
+    <p>Already have an account? <a href="{{route('/login') }}">Sign in</a>.</p>
   </div>
 </form>
 </body>
-
 </html>

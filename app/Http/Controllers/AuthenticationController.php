@@ -1,9 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use Redirect;
+
+use App\Models\User;
+use Hash;
+//use Redirect;
 use Auth;
 //use Input;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\BusDispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\Validates\Requests;
@@ -18,37 +22,32 @@ class AuthenticationController extends BaseController
     }
   public function doLogout()
     {
-    Auth::logout(); // logging out user
-    return Redirect::to('/'); // redirection to login screen
+    Auth::logout(); 
+    return Redirect::to('/');
     }
   public function login(Request $request)
     {
       
-    // Creating Rules for Email and Password
     $rules = array(
-      'email' => 'required|email', // make sure the email is an actual email
+      'email' => 'required|email',
       'password' => 'required|alphaNum|min:8',
       'role'=>'required'
     );
-      // password has to be greater than 3 characters and can only be alphanumeric and);
-      // checking all field
+     
       $validator = Validator::make($request->all() , $rules);
-      // if the validator fails, redirect back to the form
       if ($validator->fails())
         {
-          echo "no";
-        // return Redirect::to('login')->withErrors($validator) // send back all errors to the login form
-        // ->withInput($request::except('password')); // send back the input (not the password) so that we can repopulate the form
+        
+         return Redirect::back()->withInput($request->all())->withErrors($validator) ;
         }
         else
         {
-        // create our user data for the authentication
         $userdata = array(
           'email' =>$request->email,
           'password' => $request->password,
           'role'=>$request->role
         );
-        // attempt to do the login
+        
         if (Auth::attempt($userdata))
           {
             if($request->role=='admin' or $request->role=='advertiser'){
@@ -59,13 +58,47 @@ class AuthenticationController extends BaseController
           }
           }
           else{
-            echo "data error";
-          }
-          
-      
-          // validation not successful, send back to form
-          // return Redirect::to('checklogin');
+            return  Redirect::back()->withInput($request->all())->with('error','your email or password or role are wrong.');
+                    }
+        
           
         }
       }
+
+      public function showRegister()
+      {
+     
+      return view('authentication.register');
+      }
+      public function register(Request $request)
+    {  
+     
+      $rules = array(
+        'name'=>'required',
+        'email' => 'required|email',
+        'password' => 'required|alphaNum|min:8',
+        'role'=>'required'
+      );
+       
+        $validator = Validator::make($request->all() , $rules);
+        if ($validator->fails())
+          {
+          
+           return Redirect::back()->withInput($request->all())->withErrors($validator) ;
+          }
+        else
+        {
+        $userdata = array(
+          'name'=>$request->name,
+          'email' =>$request->email,
+          'password' =>  Hash::make($request->password),
+          'role'=>$request->role
+        );
+        
+        $check =User::create($userdata);
+        
+       return redirect("/")->withSuccess('You have signed-in');
+    }
+  }
+
     }

@@ -13,8 +13,10 @@ use App\Http\Controllers\AuthenticationController;
 |
 */
 
-Route::get('/',[AuthenticationController::class,"showLogin"]);
+Route::get('/',[AuthenticationController::class,"showLogin"])->name('/login');
 Route::post('/login',[AuthenticationController::class,"login"])->name('login');
+Route::get('/register',[AuthenticationController::class,"showRegister"])->name('/register');
+Route::post('/register',[AuthenticationController::class,"register"])->name('register');
 Route::get('/logout',[AuthenticationController::class,"logout"])->name("logout");
 
    
