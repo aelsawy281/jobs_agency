@@ -312,6 +312,16 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text'        => 'Packages',
+            'url'         => 'packages/list',
+            
+        ],
+        [
+            'text'        => 'Jobs',
+            'url'         => 'jobs/list',
+            
+        ],
+        [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',

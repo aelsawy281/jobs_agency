@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Apply::class,);
     }
+    //user create many jobs
+    public function jobs()
+    {
+        return $this->hasMany(Jobs::class,);
+    }
 }

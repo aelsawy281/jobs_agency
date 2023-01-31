@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="d-flex justify-content-between">
-    <h1>Packages List </h1>
+    <h1>Jobs List </h1>
     @if(session()->has('success'))
     <div class="alert alert-success float-right">
         <span>{{ session()->get('success') }}</span>
@@ -26,8 +26,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Packages List                           
-                              <a href="{{ route('create_package') }}" class="btn btn-primary float-right">Package Create</a>
+                        <h4>Jobs List                           
+                              <a href="{{ route('create_job') }}" class="btn btn-primary float-right">Job Create</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -36,30 +36,30 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Package Name</th>
-                                    <th>Price</th>
-                                    <th>Number Of Ads</th>
+                                    <th>Job Name</th>
+                                    <th>Speciality</th>
+                                    <th>Created by</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                        foreach($packages as $package)
+                                        foreach($jobs as $job)
                                         {
-                                    
+                                          
                                             ?>
                                             <tr>
-                                                <td>{{$package['id'] }}</td>
-                                                <td>{{$package['title'] }}</td>
-                                                <td>{{$package['price'] }} </td>
-                                                <td>{{$package['number_of_ads'] }}</td>
+                                                <td>{{$job['id'] }}</td>
+                                                <td>{{$job['title'] }}</td>
+                                                <td>{{$job->speciality->name }} </td>
+                                                <td>{{$job->user->name  }}</td>
                                                 <td>
                                                     <a href="" class="btn btn-info btn-sm">View</a>
-                                                    <a href="{{ route('package_edit',$package->id ) }}" class="btn btn-success btn-sm">Edit</a>
-                                                    <form action="{{ route('package_delete',$package->id) }}" method="POST" class="d-inline">
+                                                    <a href="{{ route('job_edit',$job->id ) }}" class="btn btn-success btn-sm">Edit</a>
+                                                    <form action="{{ route('job_delete',$job->id) }}" method="POST" class="d-inline">
                                                         {{ method_field('delete')}}
                                                         @csrf
-                                                        <button type="submit" name="delete_book" value="{{$package['id']}}" class="btn btn-danger btn-sm">Delete</button>
+                                                        <button type="submit" name="delete_job" value="{{$job['id']}}" class="btn btn-danger btn-sm">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>

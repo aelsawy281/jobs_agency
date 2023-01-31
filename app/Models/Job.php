@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skill extends Model
+class Job extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -26,6 +26,10 @@ class Skill extends Model
     }
     public function speciality()
     {
-        return $this->belongsTo(Speciality::class);
+        return $this->belongsTo(Specialty::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    } 
 }

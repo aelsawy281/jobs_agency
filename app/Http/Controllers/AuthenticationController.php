@@ -20,7 +20,7 @@ class AuthenticationController extends BaseController
    
     return view('authentication.login');
     }
-  public function doLogout()
+  public function logout()
     {
     Auth::logout(); 
     return Redirect::to('/');
@@ -45,13 +45,13 @@ class AuthenticationController extends BaseController
         $userdata = array(
           'email' =>$request->email,
           'password' => $request->password,
-          'role'=>$request->role
+         // 'role'=>$request->role
         );
-        
+       // dd($request->role);
         if (Auth::attempt($userdata))
-          {
+          { 
             if($request->role=='admin' or $request->role=='advertiser'){
-              echo "admin";
+              return view('admin.dashboard');
             }
           else{
             echo "employee";

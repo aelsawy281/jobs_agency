@@ -42,8 +42,8 @@ class PackageController extends Controller
             
               }
               $check =Package::create($data);
-        echo "ok";
-            //  return redirect("/")->withSuccess('You have signed-in');
+    
+              return redirect("packages/list")->with('success', 'Package Created successfully');
       }
 public function index(){
     $packages=Package::all();
@@ -81,6 +81,12 @@ public function update($id,Request $request){
         
           }
           $check =$package->update($data);
-      return redirect("packages/list")->withSuccess('Package Updated successfully');
+      return redirect("packages/list")->with('success', 'Package Updated successfully');
+}
+
+public function destroy($id){
+    $package=Package::findOrFail($id);
+    $package->delete();
+    return redirect("packages/list")->with('success', 'Package deleted successfully');
 }
 }
